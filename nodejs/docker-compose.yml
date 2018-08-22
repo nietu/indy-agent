@@ -1,139 +1,167 @@
 version: '3'
 
-#networks:
-#  services:
-#    ipam:
-#      config:
-#        - subnet: 173.17.0.0/24
+networks:
+  services:
+    ipam:
+      config:
+        - subnet: 173.17.0.0/24
 
 services:
   #
   # Pool
   #
-  #pool:
-  #  build:
-  #    context: .
-  #    dockerfile: indy-pool.dockerfile
-  #    args:
-  #      - pool_ip=173.17.0.100
-  #  ports:
-  #    - 9701-9708:9701-9708
-  #  networks:
-  #    services:
-  #      ipv4_address: 173.17.0.100
+  pool:
+    build:
+      context: .
+      dockerfile: indy-pool.dockerfile
+      args:
+        - pool_ip=173.17.0.100
+    ports:
+      - 9701-9708:9701-9708
+    networks:
+      services:
+        ipv4_address: 173.17.0.100
 
   #
   # Agents
   #
-  alice:
+  aurora:
     image: indy-agentjs
     build:
       context: .
     command: "bash -c 'npm start'"
     environment:
       - PORT=3000
-      - NAME=Alice
-      - EMAIL=alice@faber.edu
+      - NAME=Aurora
+      - EMAIL=aurora@suomi.fi
       - PASSWORD=123
-      - USERNAME=alice
+      - USERNAME=aurora
       - PUBLIC_DID_ENDPOINT=173.17.0.150:3000
       - DOCKERHOST=${DOCKERHOST}
       - RUST_LOG=${RUST_LOG}
       - TEST_POOL_IP=${TEST_POOL_IP}
+      - SUB_URL=/saidot_aurora
     ports:
       - 3000:3000
-    #depends_on:
-      #- pool
+    depends_on:
+      - pool
     networks:
       services:
         ipv4_address: 173.17.0.150
 
   #
   #
-  bob:
+  meeri:
     image: indy-agentjs
     command: "bash -c 'npm start'"
     environment:
       - PORT=3001
-      - NAME=Bob
-      - EMAIL=bob@byu.edu
+      - NAME=Meeri
+      - EMAIL=meeri@saidot.ai
       - PASSWORD=123
-      - USERNAME=bob
+      - USERNAME=meeri
       - PUBLIC_DID_ENDPOINT=173.17.0.160:3001
       - DOCKERHOST=${DOCKERHOST}
       - RUST_LOG=${RUST_LOG}
       - TEST_POOL_IP=${TEST_POOL_IP}
+      - SUB_URL=/saidot_meeri
     ports:
       - 3001:3001
     depends_on:
-      #- pool
-      - alice
+      - pool
+      - aurora
     networks:
       services:
         ipv4_address: 173.17.0.160
 
-  faber:
+  teemu:
     image: indy-agentjs
     command: "bash -c 'npm start'"
     environment:
       - PORT=3002
-      - NAME=Faber University
-      - EMAIL=admin@faber.edu
+      - NAME=Teemu
+      - EMAIL=teemu@saidot.ai
       - PASSWORD=123
-      - USERNAME=faber
+      - USERNAME=teemu
       - PUBLIC_DID_ENDPOINT=173.17.0.170:3002
       - DOCKERHOST=${DOCKERHOST}
       - RUST_LOG=${RUST_LOG}
       - TEST_POOL_IP=${TEST_POOL_IP}
+      - SUB_URL=/saidot_teemu
     ports:
       - 3002:3002
     depends_on:
-      #- pool
-      - alice
+      - pool
+      - aurora
     networks:
       services:
         ipv4_address: 173.17.0.170
 
-  acme:
+  kesko:
     image: indy-agentjs
     command: "bash -c 'npm start'"
     environment:
       - PORT=3003
-      - NAME=Acme Corporation
-      - EMAIL=boss@acme.com
+      - NAME=Kesko
+      - EMAIL=admin@kesko.com
       - PASSWORD=123
-      - USERNAME=acme
+      - USERNAME=kesko
       - PUBLIC_DID_ENDPOINT=173.17.0.180:3003
       - DOCKERHOST=${DOCKERHOST}
       - RUST_LOG=${RUST_LOG}
       - TEST_POOL_IP=${TEST_POOL_IP}
+      - SUB_URL=/saidot_kesko
     ports:
       - 3003:3003
     depends_on:
-      #- pool
-      - alice
+      - pool
+      - aurora
     networks:
       services:
         ipv4_address: 173.17.0.180
 
-  thrift:
+  bot:
     image: indy-agentjs
     command: "bash -c 'npm start'"
     environment:
       - PORT=3004
-      - NAME=Thrift Bank
-      - EMAIL=owner@thrift.com
+      - NAME=Bot
+      - EMAIL=bot@kesko.com
       - PASSWORD=123
-      - USERNAME=thrift
+      - USERNAME=bot
       - PUBLIC_DID_ENDPOINT=173.17.0.190:3004
       - DOCKERHOST=${DOCKERHOST}
       - RUST_LOG=${RUST_LOG}
       - TEST_POOL_IP=${TEST_POOL_IP}
+      - SUB_URL=/saidot_bot
     ports:
       - 3004:3004
     depends_on:
-      #- pool
-      - alice
+      - pool
+      - aurora
     networks:
       services:
         ipv4_address: 173.17.0.190
+
+  tommi:
+    image: indy-agentjs
+    command: "bash -c 'npm start'"
+    environment:
+      - PORT=3005
+      - NAME=tommi
+      - EMAIL=tommi@saidot.ai
+      - PASSWORD=123
+      - USERNAME=tommi
+      - PUBLIC_DID_ENDPOINT=173.17.0.200:3005
+      - DOCKERHOST=${DOCKERHOST}
+      - RUST_LOG=${RUST_LOG}
+      - TEST_POOL_IP=${TEST_POOL_IP}
+      - SUB_URL=/saidot_tommi
+    ports:
+      - 3005:3005
+    depends_on:
+      - pool
+      - aurora
+    networks:
+      services:
+        ipv4_address: 173.17.0.200

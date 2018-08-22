@@ -33,21 +33,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-app.use('/saidot_tommi',express.static(path.join(__dirname, 'ui/public')));
-app.set('base', '/saidot_tommi');
-app.use('/saidot_tommi', indexRouter);
-app.use('/saidot_tommi/api', apiRouter);
-app.post('/indy', indyHandler.middleware);
-
-/*
-
-app.use(express.static(path.join(__dirname, 'ui/public')));
-app.use('/', indexRouter);
-app.use('/api', apiRouter);
-app.post('/indy', indyHandler.middleware);
-*/
-
+if (config.subUrl.length > 2) {
+  //app.use('/saidot_tommi',express.static(path.join(__dirname, 'ui/public')));
+  //app.set('base', '/saidot_tommi');
+  //app.use('/saidot_tommi', indexRouter);
+  //app.use('/saidot_tommi/api', apiRouter);
+  app.use(config.subUrl, express.static(path.join(__dirname, 'ui/public')));
+  app.set('base', config.subUrl);
+  app.use(config.subUrl, indexRouter);
+  app.use(config.subUrl+'/api', apiRouter);
+  app.post('/indy', indyHandler.middleware);
+} else {
+  app.use(express.static(path.join(__dirname, 'ui/public')));
+  app.use('/', indexRouter);
+  app.use('/api', apiRouter);
+  app.post('/indy', indyHandler.middleware);
+};
 
 // Invoke express-print-routes
 var routepath = require('path');
@@ -65,6 +66,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   console.log(req._parsedUrl.path);
+  console.log(config);
   // render the error page
   res.status(err.status || 500);
   res.render('error');

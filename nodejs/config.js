@@ -30,11 +30,12 @@ const config = {
     walletName: `${process.env.USERNAME || 'tommi'}_wallet`,
 
     // Optional: Give your pool config a unique name
+    //poolName: process.env.POOL_NAME || 'pool1',
     poolName: process.env.POOL_NAME || 'aidemo',
 
     // Optional: Give your pool config a unique name
-    subUrl: process.env.SUB_URL || '/saidot_tommi',
-    //subUrl: process.env.SUB_URL || '',
+    //subUrl: process.env.SUB_URL || '/saidot_tommi',
+    subUrl: process.env.SUB_URL || '',
 
     // This information is used to issue your "Government ID"
     userInformation: {

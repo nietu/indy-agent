@@ -22,7 +22,7 @@ app.set('port', port);
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
-  path: '/saidot_tommi/socket.io'
+  path: config.subUrl+'/socket.io'
 });
 
 const socketHandler = require('../ui/sockets').handler;

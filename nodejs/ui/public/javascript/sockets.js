@@ -4,7 +4,7 @@ $(function () {
     if(window.WebSocket){
         socket = io({
             transports: ['websocket'],
-            path: '/saidot_tommi/socket.io'
+            path: '/socket.io'
         });
 
         socket.on('chat message', function(msg){
