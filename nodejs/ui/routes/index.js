@@ -43,7 +43,8 @@ router.get('/', auth.isLoggedIn, async function (req, res) {
         credentialDefinitions: await indy.did.getEndpointDidAttribute('credential_definitions'),
         endpointDid: await indy.did.getEndpointDid(),
         proofRequests: proofRequests,
-        name: config.userInformation.name
+        name: config.userInformation.name,
+        subUrl: config.subUrl
     });
 
     for(let prKey of Object.keys(proofRequests)) {
@@ -53,7 +54,8 @@ router.get('/', auth.isLoggedIn, async function (req, res) {
 
 router.get('/login', function(req, res) {
    res.render('login', {
-       name: config.userInformation.name
+       name: config.userInformation.name,
+       subUrl: config.subUrl
    });
 });
 
@@ -64,10 +66,10 @@ router.post('/login', async function(req, res) {
         req.session.token = token;
         req.session.save((err) => {
             auth.validTokens.push(token);
-            res.redirect('/');
+            res.redirect(config.subUrl+'/');
         });
     } else {
-        res.redirect('/login?msg=Authentication Failed. Please try again.');
+        res.redirect(config.subUrl+'/login?msg=Authentication Failed. Please try again.');
     }
 });
 
@@ -82,7 +84,7 @@ router.get('/logout', async function(req, res, next) {
             console.error(err);
         } else {
             auth.session = null;
-            res.redirect('/login');
+            res.redirect(config.subUrl+'/login');
         }
     });
 });

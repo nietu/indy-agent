@@ -1,7 +1,7 @@
 <div id="issuing" class="tab" style="display:none;">
     <div class="w3-container w3-card w3-padding w3-margin" style="float: left;width: 31%">
         <h3>Create Schema: </h3>
-        <form method="POST" action="/api/issuer/create_schema">
+        <form method="POST" action="<%=subUrl%>/api/issuer/create_schema">
             <label>Name of Schema: </label>
             <input type="text" class="w3-input" name="name_of_schema" value="Transcript">
             <br><br>
@@ -25,7 +25,7 @@
     <div style="float: left;width: 31%">
         <div class="w3-container w3-card w3-padding w3-margin">
             <h3>Create Credential Definition</h3>
-            <form method="POST" action="/api/issuer/create_cred_def">
+            <form method="POST" action="<%=subUrl%>/api/issuer/create_cred_def">
                 <label>Select a Schema:</label>
                 <select class="w3-select" name="schema_id" required>
                     <%for(let schema of schemas) {%>
@@ -41,7 +41,7 @@
         </div>
         <div class="w3-container w3-card w3-padding w3-margin">
             <h3>Send Credential Offer</h3>
-            <form method="POST" action="/api/issuer/send_credential_offer">
+            <form method="POST" action="<%=subUrl%>/api/issuer/send_credential_offer">
                 <label>Relationship: </label>
                 <select class="w3-select" name="their_relationship_did" required>
                     <%for(let relationship of relationships) {%>

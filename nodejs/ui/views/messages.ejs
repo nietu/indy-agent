@@ -4,7 +4,7 @@
         <%for(var message of messages) {%>
         <div class="center w3-padding">
             <div class="w3-card w3-container" >
-                <button class="w3-btn w3-white w3-right" onclick="request('/api/messages/delete', 'POST', JSON.stringify({messageId: '<%=message.id%>'}))"><i class="fa fa-close"></i></button>
+                <button class="w3-btn w3-white w3-right" onclick="request('<%=subUrl%>/api/messages/delete', 'POST', JSON.stringify({messageId: '<%=message.id%>'}))"><i class="fa fa-close"></i></button>
                 <%if(message.relationshipName) {%>
                     <p><b>From: <%=message.relationshipName%></b></p>
                 <%}%>

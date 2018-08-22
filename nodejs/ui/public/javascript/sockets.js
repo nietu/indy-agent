@@ -3,7 +3,8 @@ let socket;
 $(function () {
     if(window.WebSocket){
         socket = io({
-            transports: ['websocket']
+            transports: ['websocket'],
+            path: '/saidot_tommi/socket.io'
         });
 
         socket.on('chat message', function(msg){

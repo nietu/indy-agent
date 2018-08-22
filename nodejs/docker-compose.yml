@@ -1,26 +1,26 @@
 version: '3'
 
-networks:
-  services:
-    ipam:
-      config:
-        - subnet: 173.17.0.0/24
+#networks:
+#  services:
+#    ipam:
+#      config:
+#        - subnet: 173.17.0.0/24
 
 services:
   #
   # Pool
   #
-  pool:
-    build:
-      context: .
-      dockerfile: indy-pool.dockerfile
-      args:
-        - pool_ip=173.17.0.100
-    ports:
-      - 9701-9708:9701-9708
-    networks:
-      services:
-        ipv4_address: 173.17.0.100
+  #pool:
+  #  build:
+  #    context: .
+  #    dockerfile: indy-pool.dockerfile
+  #    args:
+  #      - pool_ip=173.17.0.100
+  #  ports:
+  #    - 9701-9708:9701-9708
+  #  networks:
+  #    services:
+  #      ipv4_address: 173.17.0.100
 
   #
   # Agents
@@ -42,8 +42,8 @@ services:
       - TEST_POOL_IP=${TEST_POOL_IP}
     ports:
       - 3000:3000
-    depends_on:
-      - pool
+    #depends_on:
+      #- pool
     networks:
       services:
         ipv4_address: 173.17.0.150
@@ -66,7 +66,7 @@ services:
     ports:
       - 3001:3001
     depends_on:
-      - pool
+      #- pool
       - alice
     networks:
       services:
@@ -88,7 +88,7 @@ services:
     ports:
       - 3002:3002
     depends_on:
-      - pool
+      #- pool
       - alice
     networks:
       services:
@@ -110,7 +110,7 @@ services:
     ports:
       - 3003:3003
     depends_on:
-      - pool
+      #- pool
       - alice
     networks:
       services:
@@ -132,7 +132,7 @@ services:
     ports:
       - 3004:3004
     depends_on:
-      - pool
+      #- pool
       - alice
     networks:
       services:

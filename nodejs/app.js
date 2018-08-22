@@ -32,11 +32,27 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'ui/public')));
 
+
+app.use('/saidot_tommi',express.static(path.join(__dirname, 'ui/public')));
+app.set('base', '/saidot_tommi');
+app.use('/saidot_tommi', indexRouter);
+app.use('/saidot_tommi/api', apiRouter);
+app.post('/indy', indyHandler.middleware);
+
+/*
+
+app.use(express.static(path.join(__dirname, 'ui/public')));
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.post('/indy', indyHandler.middleware);
+*/
+
+
+// Invoke express-print-routes
+var routepath = require('path');
+var filepath = routepath.join(__dirname, './routes.generated.txt');
+require('express-print-routes')(app, filepath);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,7 +64,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  console.log(req._parsedUrl.path);
   // render the error page
   res.status(err.status || 500);
   res.render('error');
