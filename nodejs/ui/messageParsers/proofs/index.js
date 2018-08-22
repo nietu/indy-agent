@@ -1,5 +1,6 @@
 'use strict';
 const indy = require('../../../indy');
+const config = require('../../../config');
 
 exports.request = async function(message) {
     let theirDid = message.message.origin;
@@ -13,7 +14,7 @@ exports.request = async function(message) {
     message.links = [
         {
             name: "Accept",
-            href: "/api/proofs/accept",
+            href: config.subUrl+"/api/proofs/accept",
             method: "POST",
             message: JSON.stringify({
                 messageId: message.id
@@ -21,7 +22,7 @@ exports.request = async function(message) {
         },
         {
             name: "Reject",
-            href: "/api/messages/delete",
+            href: config.subUrl+"/api/messages/delete",
             method: "POST",
             message: JSON.stringify({
                 messageId: message.id

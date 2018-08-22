@@ -1,14 +1,15 @@
 'use strict';
+const config = require('../../../config');
 
 exports.connectionsRequest = function (message) {
     message.links = {
         accept: {
-            href: "/api/connections/request",
+            href: config.subUrl+"/api/connections/request",
             method: "PUT",
             rel: "accept"
         },
         reject: {
-            href: "/api/connections/request",
+            href: config.subUrl+"/api/connections/request",
             method: "DELETE",
             rel: "reject"
         }
@@ -20,12 +21,12 @@ exports.connectionsRequest = function (message) {
 exports.connectionsResponse = function (message) {
     message.links = {
         accept: {
-            href: "/api/connections/request",
+            href: config.subUrl+"/api/connections/request",
             method: "PUT",
             rel: "accept"
         },
         reject: {
-            href: "/api/connections/request",
+            href: config.subUrl+"/api/connections/request",
             method: "DELETE",
             rel: "reject"
         }

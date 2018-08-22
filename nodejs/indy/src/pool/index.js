@@ -29,8 +29,8 @@ exports.setup = async function () {
             throw e;
         }
     } finally {
-        console.log(poolConfig);
-        console.log(config);
+        //console.log(poolConfig);
+        //console.log(config);
         pool = await sdk.openPoolLedger(config.poolName);
     }
 };
